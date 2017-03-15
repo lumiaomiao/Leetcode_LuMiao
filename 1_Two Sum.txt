@@ -1,0 +1,78 @@
+/********************************************************************************************************
+Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+Example:
+Given nums = [2, 7, 11, 15], target = 9,
+
+Because nums[0] + nums[1] = 2 + 7 = 9,
+return [0, 1].
+********************************************************************************************************/
+
+//新的思路，果然还是有进步的
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        vector<int> result(2,0);
+        map<int,int> save;
+        for(int i = 0; i < nums.size(); i++){
+            int tmp = target - nums[i];
+            if(save.find(tmp) != save.end()){
+                result[0] = save[tmp];
+                result[1] = i;
+                return result;
+            }else{
+                save[nums[i]] = i;
+            }
+        }
+
+        return result;
+    }
+};
+
+
+
+//很久之前的代码，用的居然是暴力破解
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        vector<int> num1,re;
+        int x,y;
+        num1.assign(nums.begin(),nums.end());
+        sort(nums.begin(),nums.end());
+        for(int i=0;i<nums.size()-1;i++)
+        {
+            for(int j=nums.size()-1;j>i;j--)
+            {
+                if(nums.at(i)+nums.at(j)==target)
+                {
+                    x=nums.at(i);
+                    y=nums.at(j);
+                    int m=0;
+                    for(vector<int>::iterator it=num1.begin();(it<num1.end())&&(re.size()<2);it++,m++)
+                    {
+                        if(*it==x)
+                        {
+                            re.push_back(m);
+                            continue;
+                        }
+                        else if(*it==y)
+                        {
+                            re.push_back(m);
+                            continue;
+                        }
+                        
+                        
+                    }
+                    return re;
+                }
+                else if(nums.at(i)+nums.at(j)<target)
+                {
+                    break;
+                }
+            }
+        }
+        return re;
+    }
+};
